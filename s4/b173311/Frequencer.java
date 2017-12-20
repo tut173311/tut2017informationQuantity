@@ -19,23 +19,45 @@ public class Frequencer implements FrequencerInterface{
     // Code to Test, *warning: This code  contains intentional problem*
     byte [] myTarget;
     byte [] mySpace;
+    
     public void setTarget(byte [] target) { myTarget = target;}
     public void setSpace(byte []space) { mySpace = space; }
+    
     public int frequency() {
-	int targetLength = myTarget.length;
-	int spaceLength = mySpace.length;
-	int count = 0;
-	for(int start = 0; start<spaceLength; start++) { // Is it OK? 演習メモ12/14
-	    boolean abort = false;
-	    for(int i = 0; i<targetLength; i++) {
-		if(myTarget[i] != mySpace[start+i]) { abort = true; break; }
-	    }
-	    if(abort == false) { count++; }
-	}
-	return count;
+        // 各値が設定されていない場合
+        if(myTarget == null) {
+            return -1;
+        }
+        if(mySpace == null) {
+            return 0;
+        }
+        
+        int targetLength = myTarget.length;
+        int spaceLength = mySpace.length;
+        int count = 0;
+        
+        // TAGETの長さが0の場合
+        if(targetLength == 0) {
+            return -1;
+        }
+        
+        for(int start = 0; start <= (spaceLength - targetLength); start++) { // Is it OK?
+            boolean abort = false;
+            for(int i = 0; i < targetLength; i++) {
+                if(myTarget[i] != mySpace[start+i]) {
+                    abort = true;
+                    break;
+                }
+            }
+            if(abort == false) {
+                count++;
+                start += (targetLength - 1);
+            }
+        }
+        return count;
     }
 
-    // I know that here is a potential problem in the declaration. 演習メモ12/14
+    // I know that here is a potential problem in the declaration.
     public int subByteFrequency(int start, int length) { 
 	// Not yet, but it is not currently used by anyone.
 	return -1;
