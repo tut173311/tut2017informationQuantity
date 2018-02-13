@@ -240,8 +240,8 @@ public class Frequencer implements FrequencerInterface{
         int k = i+1;
         while(k<=j && suffixCompare(i,k)==0) k++; //先頭と異なる値を探す
         if(k > j) return -1; // iからjまでの範囲の値が全て同じ値だった場合
-        if(suffixCompare(i,k)==0 || suffixCompare(i,k)==1) { //suffix_i >= suffix_k の場合
-            return i;
+        if(suffixCompare(i,k)==0 || suffixCompare(i,k)==1) {
+            return i; //suffix_i >= suffix_k の場合
         } else {
             return k;
         }
@@ -285,6 +285,8 @@ public class Frequencer implements FrequencerInterface{
             int temp = suffixArray[l];
             suffixArray[l] = suffixArray[r];
             suffixArray[r] = temp;
+            
+            //探索位置を進める
             l++;
             r--;
         }
@@ -311,7 +313,7 @@ public class Frequencer implements FrequencerInterface{
             System.out.println("パーティション後のarray");
             printSuffixArray();
             */
-            //分割された左側と右側を再帰的にソートする
+            // 分割された左側と右側を再帰的にソートする
             quickSort(i,k-1); //左側
             quickSort(k,j); //右側
         }
@@ -334,7 +336,7 @@ public class Frequencer implements FrequencerInterface{
         suffixArray = new int[space.length];
         // put all suffixes in suffixArray. Each suffix is expressed by one interger.
         // すべての接尾辞を接尾辞Arrayに入れます。 各接尾辞は整数で表されます。
-        for(int k = 0; k< space.length; k++) {
+        for(int k=0; k<space.length; k++) {
             suffixArray[k] = k;
         }
         
@@ -439,7 +441,7 @@ public class Frequencer implements FrequencerInterface{
         
         if(spaLeng < tarLeng) return -1; // targetの方が長い場合
         
-        // 上のどの条件にも該当しなかったので、targetは接頭辞であると言える
+        // 上のどの条件にも該当しなかったので、target=接頭辞であると言える
         return 0;
     }
     
@@ -483,6 +485,7 @@ public class Frequencer implements FrequencerInterface{
     
     //検索に引っかかった要素の数を返す
     public int subByteFrequency(int start, int end) {
+        /*
         //This method could be defined as follows though it is slow.
         //このメソッドは遅いですが、以下のように定義することができます。
         int spaceLength = mySpace.length;
@@ -500,6 +503,7 @@ public class Frequencer implements FrequencerInterface{
                 offset += (end - start) -1;
             }
         }
+        */
         
         int first = subByteStartIndex(start,end);
         int last1 = subByteEndIndex(start, end);
@@ -513,11 +517,15 @@ public class Frequencer implements FrequencerInterface{
         System.out.printf(": first=%d last1=%d\n", first, last1);
         */
         
+        /*
         if( count < (last1 - first)){
             return count;
         } else {
             return last1 - first;
         }
+         */
+        
+        return last1 - first;
         
     }
     
